@@ -1,7 +1,7 @@
-let powerLin = (num, exp) => {
+let powerLin = num, exp => {
 	return (exp === 1) ? num : num * powerLin(num, exp -1);
 }
-let powerLog = (num, exp) => {
+let powerLog = num, exp => {
 	if (exp === 1) return num;
 	if ((exp % 2) !== 0) return num * powerLog(num * num, (exp - 1) / 2);
 	return powerLog(num * num, exp / 2);
