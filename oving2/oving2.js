@@ -21,6 +21,7 @@ function time(func, param){
 	console.log(result);
 	return `Millisekund pr. runde: ${tid}`
 }
-console.log(time(powerLin, [1.001, 5000]));
-console.log(time(powerLog, [1.001, 5000]));
-console.log(time(Math.pow, [1.001, 5000]));
+let param = [1.001, 5000];
+console.log(time(powerLin, param));
+console.log(time(powerLog, param));
+console.log(time(Math.pow, param));
