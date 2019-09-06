@@ -1,7 +1,7 @@
-let powerLin = num, exp => {
+let powerLin = (num, exp) => {
 	return (exp === 1) ? num : num * powerLin(num, exp -1);
 }
-let powerLog = num, exp => {
+let powerLog = (num, exp) => {
 	if (exp === 1) return num;
 	if ((exp % 2) !== 0) return num * powerLog(num * num, (exp - 1) / 2);
 	return powerLog(num * num, exp / 2);
@@ -21,6 +21,7 @@ function time(func, param){
 	console.log(result);
 	return `Millisekund pr. runde: ${tid}`
 }
-console.log(time(powerLin, [1.001, 5000]));
-console.log(time(powerLog, [1.001, 5000]));
+let param = [1.001, 5000];
+console.log(time(powerLin, param));
+console.log(time(powerLog, param));
 console.log(time(Math.pow, [1.001, 5000]));
