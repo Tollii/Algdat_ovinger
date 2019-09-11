@@ -4,3 +4,5 @@
 * Øving 1 - [Aksjer](/oving1)
 
 * Øving 2 - [Recursion](/oving2)
+
+* Øving 2 - [Quicksort with assisting algorithm](/oving3)
