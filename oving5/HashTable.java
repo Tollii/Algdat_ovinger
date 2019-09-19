@@ -16,10 +16,20 @@ public class HashTable {
     Node entry = new Node(data);
 
     if(hashTable[index] != null){
-      index = divHash(data);
+      if(hashTable[index].next == null){
+          hashTable[index].next = entry;
+      } else {
+        Node n1 = hashTable[index];
+
+        while(n1.next != null){
+          n1 = n1.next;
+        }
+        n1.next = entry;
+      }
+    } else {
+      hashTable[index] = entry;
     }
     System.out.println("Index #" + index);
-    hashTable[index] = entry;
   }
 
   public int lookUp(String navn){
