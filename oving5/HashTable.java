@@ -27,10 +27,9 @@ class Node {
 public class HashTable {
   private Node[] hashTable = new Node[193];
 
-  public void addToTable(String data){
+  public boolean addToTable(String data){
     int index = divHash(data);
     Node entry = new Node(data);
-
     if(hashTable[index] != null){
       System.out.println("Collision! at #" + index + " med navn " + hashTable[index].getData() + " og " + entry.getData());
       if(hashTable[index].next() != null){
@@ -43,16 +42,40 @@ public class HashTable {
         }
         System.out.println("Index #" + index + " linked list length: " + counter);
         n1.setNext(entry);
+        return false;
       } else {
         hashTable[index].setNext(entry);
+        return false;
       }
     } else {
       hashTable[index] = entry;
+      return true;
     }
   }
 
+  public double getLastFaktor(int antall){
+    return (double)antall / (double)hashTable.length;
+  }
+
   public int lookUp(String navn){
-    return -1;
+      int index = divHash(navn);
+      if(hashTable[index].getData().equals(navn)){
+        return index;
+      } else if(hashTable[index].next().getData().equals(navn)){
+        System.out.println("Kollisjon på søk mellom navnene " + navn + " og " + hashTable[index].getData());
+        return index;
+      } else {
+        Node n1 = hashTable[index].next();
+        while(n1.getData().equals(navn)){
+          System.out.println("Kollisjon på søk mellom navnene " + navn + " og " + n1.getData());
+          if(n1.next() != null){
+            n1 = n1.next();
+          } else {
+            return -1;
+          }
+        }
+        return index;
+      }
   }
 
  // Finds hash by adding together the ascii values of the characters in the string, then dividing by 65
@@ -67,17 +90,27 @@ public class HashTable {
 
   public static void main(String[] args) throws IOException{
     HashTable table = new HashTable();
-    String str1 = "abcd";
-    String str2 = "cbda";
-    String str3 = "bdac";
-
+    int collisions = 0;
+    int numberOfLines = 0;
     FileReader fr = new FileReader("navn.txt");
     BufferedReader reader = new BufferedReader(fr);
     String read = "";
 
     while((read = reader.readLine()) != null){
-      table.addToTable(read);
+      if(!table.addToTable(read)){
+        collisions++;
+      }
+      numberOfLines++;
     }
+    double avg = (double)collisions / (double)numberOfLines;
+    System.out.println("\n");
+    System.out.println("Navnet ligger på #" + table.lookUp("Younger,Eric"));
+    System.out.println("\n");
+    System.out.println("Antall kollisjoner: " + collisions);
+    System.out.println("Gjennomsnitt kollisjon per person: " + avg);
+    System.out.println("Lastfaktor:" + table.getLastFaktor(numberOfLines));
+
+
 
 
   }
