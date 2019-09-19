@@ -24,8 +24,5 @@ function time(func, param){
 let param = [1.001, 5000];
 console.log(time(powerLin, param));
 console.log(time(powerLog, param));
-<<<<<<< HEAD
 console.log(time(Math.pow, [1.001, 5000]));
-=======
 console.log(time(Math.pow, param));
->>>>>>> c0c64cb4205a51058ee70a8448a6cc35382589d3

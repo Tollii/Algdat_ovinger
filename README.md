@@ -6,3 +6,5 @@
 * Øving 2 - [Recursion](/oving2)
 
 * Øving 3 - [Quicksort with assisting algorithm](/oving3)
+
+* Øving 4 - [Josephus' problem and error flagger](/oving3)

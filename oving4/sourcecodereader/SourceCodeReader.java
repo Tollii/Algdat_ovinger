@@ -25,10 +25,7 @@ public class SourceCodeReader {
     public  void sourceCode(){
         try{
             while ((currentLine = bufferedReader.readLine()) != null){
-
-
                 for (int i = 0; i < currentLine.length(); i++) {
-
                     if(currentLine.charAt(i) == '\'' || currentLine.charAt(i) == '\"'){
                         ignore = !ignore;
                     }
