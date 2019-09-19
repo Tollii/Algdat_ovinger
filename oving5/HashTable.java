@@ -25,16 +25,16 @@ class Node {
 }
 
 public class HashTable {
-  private Node[] hashTable = new Node[100];
+  private Node[] hashTable = new Node[193];
 
   public void addToTable(String data){
     int index = divHash(data);
     Node entry = new Node(data);
 
     if(hashTable[index] != null){
-      System.out.println("Collision! at #" + index);
+      System.out.println("Collision! at #" + index + " med navn " + hashTable[index].getData() + " og " + entry.getData());
       if(hashTable[index].next() != null){
-        System.out.println("Collision again!");
+        System.out.println("Collision! at #" + index + " med navn " + hashTable[index].next().getData() + " og " + entry.getData());
         Node n1 = hashTable[index].next();
         int counter = 1;
         while(n1.next() != null){
@@ -70,10 +70,6 @@ public class HashTable {
     String str1 = "abcd";
     String str2 = "cbda";
     String str3 = "bdac";
-
-    table.addToTable(str1);
-    table.addToTable(str2);
-    table.addToTable(str3);
 
     FileReader fr = new FileReader("navn.txt");
     BufferedReader reader = new BufferedReader(fr);
