@@ -1,84 +1,54 @@
-class Node {
-  private Node next;
-  private int data;
+import java.io.IOException;
+import java.util.Random;
 
-  public Node(int data){
-    this.data = data;
-  }
+public class HashInt {
+  private Integer[] table = new Integer[6000011];
 
-  public Node next(){
-    return next;
-  }
-
-  public void setNext(Node next){
-    this.next = next;
-  }
-
-  public int getData(){
-    return data;
-  }
-}
-
-public class HashTable {
-  private Node[] hashTable = new Node[6000000];
-
-  public boolean addToTable(int data){
-    int index = divHash(data);
-    Node entry = new Node(data);
-    if(hashTable[index] != null){
-      if(hashTable[index].next() != null){
-        Node n1 = hashTable[index].next();
-        int counter = 1;
-        while(n1.next() != null){
-          n1 = n1.next();
-          counter++;
-        }
-        n1.setNext(entry);
-        return false;
-      } else {
-        hashTable[index].setNext(entry);
-        return false;
+  public int addToTable(int data){
+    int index = hash1(data);
+    for(int i = 0; i < table.length; i++){
+      int j = probe(index, hash2(data), i);
+      if(table[j] == null){
+        table[j] = data;
+        return j;
       }
-    } else {
-      hashTable[index] = entry;
-      return true;
     }
+    return -1;
   }
 
   public double getLastFaktor(int antall){
-    return (double)antall / (double)hashTable.length;
+    return (double)antall / (double)table.length;
   }
 
-  public int lookUp(int num){
-      int index = divHash(num);
-      if(hashTable[index].getData().equals(num)){
-        return index;
-      } else if(hashTable[index].next().getData().equals(num)){
-        return index;
-      } else {
-        Node n1 = hashTable[index].next();
-        while(n1.getData().equals(num)){
-          if(n1.next() != null){
-            n1 = n1.next();
-          } else {
-            return -1;
-          }
-        }
-        return index;
-      }
-  }
-  
  // Finds hash by adding together the ascii values of the characters in the string, then dividing by 65
-  public int hash1(int str){
-    return -1;
+  public int hash1(int num){
+    return num % table.length;
   }
 
-  public int hash2(int str){
-    return -1;
+  public int hash2(int num){
+    return num % (table.length - 1) + 1;
+  }
+
+  public int probe(int data, int i, int m){
+    return (hash1(data) + i * hash2(data)) % m;
   }
 
   public static void main(String[] args) throws IOException{
     HashTable table = new HashTable();
+    Random random = new Random();
+    int[] numbers = new int[5000000];
+    for(int i = 0; i < 5000000; i++){
+      numbers[i] = random.nextInt(60000000);
+    }
+
+    for(int i = 0; i < table.length; i++){
+      
+    }
+
+
+
+
+
 
   }
 }
