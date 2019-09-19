@@ -21,12 +21,12 @@ class Node {
   public String getData(){
     return data;
   }
-
 }
 
 public class HashTable {
   private Node[] hashTable = new Node[193];
 
+  // Adds a new element to the hash with linked lists for collision handling
   public boolean addToTable(String data){
     int index = divHash(data);
     Node entry = new Node(data);
@@ -54,20 +54,21 @@ public class HashTable {
   }
 
   public double getLastFaktor(int antall){
-    return (double)antall / (double)hashTable.length;
+    return (double) antall / hashTable.length;
   }
 
+  // Gets the hash the given name is
   public int lookUp(String navn){
       int index = divHash(navn);
       if(hashTable[index].getData().equals(navn)){
         return index;
       } else if(hashTable[index].next().getData().equals(navn)){
-        System.out.println("Kollisjon på søk mellom navnene " + navn + " og " + hashTable[index].getData());
+        System.out.println("\tKollisjon på søk mellom navnene " + navn + " og " + hashTable[index].getData());
         return index;
       } else {
         Node n1 = hashTable[index].next();
         while(n1.getData().equals(navn)){
-          System.out.println("Kollisjon på søk mellom navnene " + navn + " og " + n1.getData());
+          System.out.println("\tKollisjon på søk mellom navnene " + navn + " og " + n1.getData());
           if(n1.next() != null){
             n1 = n1.next();
           } else {
@@ -102,18 +103,11 @@ public class HashTable {
       }
       numberOfLines++;
     }
-    double avg = (double)collisions / (double)numberOfLines;
+    double avg = (double) collisions / numberOfLines;
     System.out.println("\n");
-    System.out.println("Navnet ligger på #" + table.lookUp("Younger,Eric"));
-    System.out.println("\n");
-    System.out.println("Antall kollisjoner: " + collisions);
-    System.out.println("Gjennomsnitt kollisjon per person: " + avg);
-    System.out.println("Lastfaktor:" + table.getLastFaktor(numberOfLines));
-
-
-
-
+    System.out.println("\tNavnet ligger på #" + table.lookUp("Younger,Eric"));
+    System.out.println("\tAntall kollisjoner: " + collisions);
+    System.out.println("\tGjennomsnitt kollisjon per person: " + avg);
+    System.out.println("\tLastfaktor:" + table.getLastFaktor(numberOfLines));
   }
-
-
 }
