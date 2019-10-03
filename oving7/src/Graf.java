@@ -109,4 +109,20 @@ public class Graf {
         return l;
     }
 
+    public void topologiPrint(Node startnode){
+        Node neste = startnode;
+        while(neste != null){
+            for(int i=0; i<node.length; i++){
+                if(neste == node[i]){
+                    System.out.println(i);
+                    continue;
+                }
+            }
+
+            neste = ((Topo_lst)neste.d).neste;
+        }
+    }
+
+
+
 }
