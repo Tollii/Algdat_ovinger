@@ -60,9 +60,53 @@ public class Graf {
         }
     }
 
+    public void dfs_init(){
+        for(int i = N; i-->0;){
+            node[i].d = new Dfs_forgj();
+        }
+    }
 
 
+    public void df_sok(Node n){
+        Dfs_forgj nd = (Dfs_forgj)n.d;
+        nd.funnet_tid = Dfs_forgj.les_tid();
+        for(Kant k = n.kant1; k != null; k = k.neste){
+            Dfs_forgj md = (Dfs_forgj)k.til.d;
+            if(md.funnet_tid == 0){
+                md.forgj = n;
+                md.dist = nd.dist + 1;
+                df_sok(k.til);
+            }
+        }
+        nd.ferdig_tid = Dfs_forgj.les_tid();
+    }
 
+    public void dfs(Node s) {
+        dfs_init();
+        ((Dfs_forgj)s.d).dist = 0;
+        df_sok(s);
+    }
 
+    public Node df_topo(Node n, Node l){
+        Topo_lst nd = (Topo_lst)n.d;
+        if(nd.funnet) return l;
+        nd.funnet = true;
+        for(Kant k = n.kant1; k != null; k = k.neste){
+            l = df_topo(k.til, l);
+        }
+        nd.neste = l;
+        return n;
+    }
+
+    public Node topologisort(){
+        Node l = null;
+        for(int i = N; i-->0;){
+            node[i].d = new Topo_lst();
+        }
+        for(int i = N; i -->0;){
+            l = df_topo(node[i], l);
+        }
+        return l;
+    }
 
 }
