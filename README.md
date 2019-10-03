@@ -11,3 +11,6 @@
 * Øving 4 - [Josephus' problem and error flagger](/oving4)
 
 * Øving 5 - [Hashtable](/oving5)
+
+* Øving 7 - [Unweighted graphs](/oving7)
+
