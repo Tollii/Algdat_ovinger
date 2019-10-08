@@ -2,11 +2,11 @@
 
 Øvinger for Algoritmer og datastrukturer
 
-* Øving 1 - [Aksjer](/oving1)
+* Øving 1 - [Aksjer](/oving1/oving1.js)
 
-* Øving 2 - [Recursion](/oving2)
+* Øving 2 - [Recursion](/oving2/oving2.js)
 
-* Øving 3 - [Quicksort with assisting algorithm](/oving3)
+* Øving 3 - [Quicksort with assisting algorithm](/oving3/oving3.js)
 
 * Øving 4 - [Josephus' problem and error flagger](/oving4)
 
