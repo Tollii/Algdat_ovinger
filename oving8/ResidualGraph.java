@@ -70,7 +70,7 @@ public class ResidualGraph {
 
     public static void main(String[] args){
         try{
-            String filename = "src/yote/flytgraf1.txt";
+            String filename = "src/yote/flytgraf3.txt";
             BufferedReader br = new BufferedReader(new FileReader(filename));
             StringTokenizer st = new StringTokenizer(br.readLine());
             int n = Integer.parseInt(st.nextToken());
@@ -86,7 +86,7 @@ public class ResidualGraph {
                 g.connect(fra, til, vekt);
             }
             System.out.println("\n");
-            System.out.println("Maksimal flyt ble " + maxflowEK(g,0,7));
+            System.out.println("Maksimal flyt ble " + maxflowEK(g,0,1));
         } catch(FileNotFoundException fnfe){
             System.out.println(fnfe);
         } catch (IOException ioe){
