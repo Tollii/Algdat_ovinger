@@ -14,3 +14,4 @@
 
 * Øving 7 - [Unweighted graphs](/oving7)
 
+* Øving 8 - [Edmonds–Karp algorithm](/oving8)
