@@ -30,7 +30,7 @@ public class LZ77 {
         inputFile = new BufferedReader(new FileReader("src/" + filename));
         outputFile = new PrintWriter(new BufferedWriter(new FileWriter("src/" + filename + ".compressed")));
 
-        StringBuilder match = new StringBuilder(bufferSize);
+        StringBuilder match = new StringBuilder();
         int intCurrentChar;
         int searchResult, matchIndex = 0;
 
@@ -38,12 +38,12 @@ public class LZ77 {
         // Reads one character each loop
         while((intCurrentChar = inputFile.read()) != -1){
             char currentChar = (char) intCurrentChar;
-            searchResult = searchBuffer.indexOf(match.append(currentChar).toString());
+            searchResult = searchBuffer.indexOf(match.toString() + currentChar);
 
             // Checks if match is found, else, encode.
             if(searchResult != -1){
                 match.append(currentChar);
-                matchIndex = searchResult;
+                matchIndex = searchResult - match.length();
             } else {
                 String encoded = "~" + matchIndex + "~" + match.length() + "~" + currentChar;
                 StringBuilder originalText = match.append(currentChar);
@@ -77,37 +77,44 @@ public class LZ77 {
                 outputFile.print(match);
             }
         }
-
-
         inputFile.close();
         outputFile.flush();
         outputFile.close();
     }
 
+    public void decompress(String filename) throws IOException{
+
+        inputFile = new BufferedReader(new FileReader("src/" + filename));
+        outputFile = new PrintWriter(new BufferedWriter(new FileWriter("src/" + filename + ".decompressed")));
+
+        int intCurrentChar, encodedIndex, encodedLength, currentIndex = 0;
+        StringBuilder text = new StringBuilder();
+
+        // One character per loop
+        while( (intCurrentChar = inputFile.read()) != -1){
+            text.append((char) intCurrentChar);
+            searchBuffer.append((char) intCurrentChar);
+
+            StringBuilder temp = new StringBuilder();
+
+            // Check for encoded text
+            if(intCurrentChar == '~'){
+                
+            }
+        }
 
 
 
+    }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-    
 
     public static void main(String[] args){
 
-        LZ77 lz = new LZ77();
+        LZ77 lz = new LZ77(4096);
         try {
-            lz.compress("ransom.txt");
+            lz.compress("sicko.txt");
+            lz.decompress("ransom.txt.compressed");
         } catch (IOException ioe){
             System.out.println(ioe);
         }
