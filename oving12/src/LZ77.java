@@ -4,7 +4,6 @@ public class LZ77 {
 
     private final int DEFAULT_BUFFER = 1024;
     private int bufferSize;
-    private Reader inputFile;
     private PrintWriter outputFile;
     private StringBuffer searchBuffer;
 
@@ -14,10 +13,9 @@ public class LZ77 {
 
     }
 
-    public LZ77(){
+    public LZ77(String filename){
         this.bufferSize = DEFAULT_BUFFER;
         searchBuffer = new StringBuffer(this.bufferSize);
-
     }
 
     private void trimBuffer(){
@@ -27,81 +25,81 @@ public class LZ77 {
     }
 
     public void compress(String filename) throws IOException {
-        inputFile = new BufferedReader(new FileReader("src/" + filename));
+
+        File file = new File("src/ransom.txt");
         outputFile = new PrintWriter(new BufferedWriter(new FileWriter("src/" + filename + ".compressed")));
 
-        StringBuilder match = new StringBuilder();
-        int intCurrentChar;
-        int searchResult, matchIndex = 0;
+        byte[] bArray = readFileToByteArray(file);
 
 
-        // Reads one character each loop
-        while((intCurrentChar = inputFile.read()) != -1){
-            char currentChar = (char) intCurrentChar;
-            searchResult = searchBuffer.indexOf(match.toString() + currentChar);
 
-            // Checks if match is found, else, encode.
-            if(searchResult != -1){
-                match.append(currentChar);
-                matchIndex = searchResult - match.length();
-            } else {
-                String encoded = "~" + matchIndex + "~" + match.length() + "~" + currentChar;
-                StringBuilder originalText = match.append(currentChar);
 
-                // If encoded is shorter than original, print encoded.
-                if(encoded.length() < originalText.length()){
-                    outputFile.print(encoded);
-                    searchBuffer.append(originalText);
-                    match = new StringBuilder();
-                    matchIndex = 0;
-                } else {
-                    // print original until empty or new match
-                    match = originalText;
-                    matchIndex = -1;
-                    while(match.length() > 1 && matchIndex == -1){
-                        outputFile.print(match.charAt(0));
-                        searchBuffer.append(match.charAt(0));
-                        match.deleteCharAt(0);
-                        matchIndex = searchBuffer.indexOf(match.toString());
-                    }
-                }
-                trimBuffer();
-            }
-        }
 
-        if(matchIndex != -1){
-            String encoded = "~" + matchIndex + "~" + match.length();
-            if(encoded.length() <= match.length()){
-                outputFile.print("~" + matchIndex + "~" + match.length());
-            } else {
-                outputFile.print(match);
-            }
-        }
-        inputFile.close();
+
+
+
+
+
+
         outputFile.flush();
         outputFile.close();
     }
 
     public void decompress(String filename) throws IOException{
 
-        inputFile = new BufferedReader(new FileReader("src/" + filename));
+        File file = new File("src/ransom.txt");
         outputFile = new PrintWriter(new BufferedWriter(new FileWriter("src/" + filename + ".decompressed")));
 
+        byte[] bArray = readFileToByteArray(file);
 
-        inputFile.close();
+        for(int i = 0; i < bArray.length; i++){
+            System.out.println(bArray[i]);
+            outputFile.print((char) bArray[i]);
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         outputFile.flush();
         outputFile.close();
     }
 
 
 
+    private static byte[] readFileToByteArray(File file){
+        FileInputStream fis;
+        byte[] bArray = new byte[(int) file.length()];
+
+        try {
+            fis = new FileInputStream(file);
+            fis.read(bArray);
+            fis.close();
+        } catch (IOException ioe){
+            System.out.println(ioe);
+        }
+        return bArray;
+    }
+
 
     public static void main(String[] args){
 
-        LZ77 lz = new LZ77(8192);
+        LZ77 compress = new LZ77(8192);
+        LZ77 decompress = new LZ77(8192);
         try {
-            // lz.compress("sicko.txt");
-            lz.decompress("sicko.txt.compressed");
+            // compress.compress("ransom.txt");
+            decompress.decompress("ransom.txt");
 
 
         } catch (IOException ioe){
@@ -115,4 +113,3 @@ public class LZ77 {
 
 
 }
-
