@@ -87,34 +87,23 @@ public class LZ77 {
         inputFile = new BufferedReader(new FileReader("src/" + filename));
         outputFile = new PrintWriter(new BufferedWriter(new FileWriter("src/" + filename + ".decompressed")));
 
-        int intCurrentChar, encodedIndex, encodedLength, currentIndex = 0;
-        StringBuilder text = new StringBuilder();
 
-        // One character per loop
-        while( (intCurrentChar = inputFile.read()) != -1){
-            text.append((char) intCurrentChar);
-            searchBuffer.append((char) intCurrentChar);
-
-            StringBuilder temp = new StringBuilder();
-
-            // Check for encoded text
-            if(intCurrentChar == '~'){
-                
-            }
-        }
-
-
-
+        inputFile.close();
+        outputFile.flush();
+        outputFile.close();
     }
+
 
 
 
     public static void main(String[] args){
 
-        LZ77 lz = new LZ77(4096);
+        LZ77 lz = new LZ77(8192);
         try {
-            lz.compress("sicko.txt");
-            lz.decompress("ransom.txt.compressed");
+            // lz.compress("sicko.txt");
+            lz.decompress("sicko.txt.compressed");
+
+
         } catch (IOException ioe){
             System.out.println(ioe);
         }
