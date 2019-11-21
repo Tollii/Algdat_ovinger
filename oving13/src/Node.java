@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Node {
+public class Node implements Comparable<Node>{
 
     private double latitude; // Breddegrad
     private double longitude; // Lengdegrad
@@ -58,7 +58,7 @@ public class Node {
         return this.cost;
     }
 
-    public boolean getExpanded(){
+    public boolean isExpanded(){
         return this.expanded;
     }
 
@@ -86,19 +86,21 @@ public class Node {
         this.discovered = discovered;
     }
 
-    public boolean getDiscovered(){
+    public boolean isDiscovered(){
         return this.discovered;
     }
 
     public void setDirectDistance(Node n){
         distanceCalculated(true);
         final int earthRadius = 6371;
+        double x = Math.toRadians((this.latitude - n.getLatitude()) / 2);
+        double y = Math.toRadians((this.longitude - n.getLongitude()) / 2);
 
         this.directDistance = (2 * earthRadius * Math.asin(Math.sqrt(
-                Math.sin(Math.toRadians((this.latitude - n.getLatitude()) / 2)) * Math.sin(Math.toRadians((this.latitude - n.getLatitude()) / 2)) +
+                Math.sin(x) * Math.sin(x) +
                         Math.cos(Math.toRadians(this.latitude)) *
                                 Math.cos(Math.toRadians(n.getLatitude())) *
-                                Math.sin(Math.toRadians((this.longitude - n.getLongitude()) / 2)) * Math.sin(Math.toRadians((this.longitude - n.getLongitude()) / 2)))));
+                                Math.sin(y) * Math.sin(y))));
 
     }
 
@@ -116,7 +118,6 @@ public class Node {
         return nodeNr + ", latitude: " + latitude + ", longitude: " + longitude;
     }
 
-    @Override
     public int compareTo(Node n) {
         return this.priority-n.getPriority();
     }

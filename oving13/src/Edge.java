@@ -5,6 +5,7 @@ public class Edge {
     private int length;
     private int speedLimit;
 
+
     public Edge(Node from, Node to, int travelTime, int length, int speedLimit){
         this.from = from;
         this.to = to;
@@ -42,11 +43,8 @@ public class Edge {
         return speedLimit;
     }
 
-    @Override
     public String toString(){
         return "Travel time:" + this.travelTime + " Length: " + this.length + " Speedlimit: " + this.speedLimit;
     }
 }
 
-
-}
