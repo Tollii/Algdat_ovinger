@@ -1,33 +1,41 @@
 import java.awt.*;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.PriorityQueue;
 import java.util.StringTokenizer;
-
 import eu.jacquet80.minigeo.MapWindow;
 import eu.jacquet80.minigeo.POI;
 import eu.jacquet80.minigeo.Point;
 import eu.jacquet80.minigeo.Segment;
+import org.openstreetmap.gui.jmapviewer.JMapViewer;
+import org.openstreetmap.gui.jmapviewer.OsmTileLoader;
+import org.openstreetmap.gui.jmapviewer.interfaces.MapMarker;
+import org.openstreetmap.gui.jmapviewer.interfaces.MapPolygon;
+import org.openstreetmap.gui.jmapviewer.interfaces.TileLoader;
+import org.openstreetmap.gui.jmapviewer.interfaces.TileSource;
+import org.openstreetmap.gui.jmapviewer.tilesources.BingAerialTileSource;
+import org.openstreetmap.gui.jmapviewer.tilesources.OsmTileSource;
 
-class Graph {
 
+import javax.swing.*;
+
+class Graph extends JFrame {
     private Node[] nodes;
     private Edge[] edges;
 
     @SuppressWarnings("Duplicates")
     public void dijkstra(int start, int goal) {
-
-        Date startTime = new Date();
-        Date stopTime;
-        PriorityQueue<Node> queue = new PriorityQueue<>();
+        PriorityQueue<Node> queue = new PriorityQueue<Node>();
         Node startNode = nodes[start];
         Node stopNode = nodes[goal];
+        Node current;
 
         startNode.setCost(0);
         queue.add(startNode);
-        Node current;
+
 
         while(!queue.isEmpty()) {
             current = queue.poll();
@@ -35,8 +43,10 @@ class Graph {
 
             if(current.equals(stopNode)) break;
 
+            // Iterate current node's edges
             for(Edge e : current.getEdge()) {
                 Node toNode = e.getNodeTo();
+
 
                 if(toNode.getCost() > current.getCost() + e.getDriveTime()) {
                     toNode.setCost(current.getCost() + e.getDriveTime());
@@ -47,7 +57,7 @@ class Graph {
 
                 toNode.setPriority(toNode.getCost());
 
-                // Adds or removes form queue based on if they have been expanded or discovered
+                // Adds or removes from queue based on if they have been expanded or discovered
                 if(!toNode.isExpanded()) {
                     if(toNode.isDiscovered()) queue.remove(toNode);
                     toNode.setDiscovered(true);
@@ -55,24 +65,16 @@ class Graph {
                 }
             }
         }
-        stopTime = new Date();
-        System.out.println("Algorithm took " + (double) (stopTime.getTime()-startTime.getTime()) + "ms");
-
-
     }
-
 
     @SuppressWarnings("Duplicates")
     public void a_Star(int start, int goal){
-        Date startTime = new Date();
-        Date stopTime;
-        PriorityQueue<Node> queue = new PriorityQueue<>();
+        PriorityQueue<Node> queue = new PriorityQueue<Node>();
         Node startNode = nodes[start];
         Node stopNode = nodes[goal];
-
+        Node current;
         startNode.setCost(0);
         queue.add(startNode);
-        Node current;
 
         while(!queue.isEmpty()) {
             current = queue.poll();
@@ -80,6 +82,7 @@ class Graph {
 
             if(current.equals(stopNode)) break;
 
+            // Iterate current node's edges
             for(Edge e : current.getEdge()) {
                 Node toNode = e.getNodeTo();
 
@@ -90,6 +93,7 @@ class Graph {
                     continue;
                 }
 
+                // Set cost from startnode if distance is infinity. Also changes based on other routes.
                 if(toNode.isDistanceCalculated()) toNode.setPriority((int) toNode.getDirectDistance() / 130*3600 + toNode.getCost());
                 else {
                     toNode.setDirectDistance(stopNode);
@@ -104,8 +108,6 @@ class Graph {
                 }
             }
         }
-        stopTime = new Date();
-        System.out.println("Algorithm took " + (double) (stopTime.getTime()-startTime.getTime()) + "ms");
     }
 
     public void fillGraph(BufferedReader nodeReader, BufferedReader edgeReader) throws IOException {
@@ -113,7 +115,6 @@ class Graph {
         int numberOfNodes = Integer.parseInt(st.nextToken());
         int numberOfEdges;
         nodes =  new Node[numberOfNodes];
-
 
         // Fill array with empty nodes
         for(int i = 0; i < numberOfNodes; i++) {
@@ -151,13 +152,15 @@ class Graph {
     }
 
     public void reconstruct_path(int start, int stop) {
-
-        ArrayList<Node> path = new ArrayList<>();
-        ArrayList<Point> points = new ArrayList<>();
-        MapWindow window = new MapWindow();
-
+        ArrayList<Node> path = new ArrayList<Node>();
+        ArrayList<Point> points = new ArrayList<Point>();
         Node startNode = nodes[start];
         Node stopNode = nodes[stop];
+        MapWindow window = new MapWindow();
+        int totalTime = stopNode.getCost() / 100;
+        int hours = totalTime / 3600;
+        int minutes = (totalTime % 3600) / 60;
+        int seconds = totalTime % 60;
         int travelDistance = 0;
 
         Node current = stopNode;
@@ -177,15 +180,7 @@ class Graph {
             path.add(current);
             n = new Point(current.getLatitude(), current.getLongitude());
             points.add(n);
-
-
-
         }
-
-        int totalTime = stopNode.getCost() / 100;
-        int hours = totalTime / 3600;
-        int minutes = (totalTime % 3600) / 60;
-        int seconds = totalTime % 60;
 
         window.addPOI(new POI(new Point(startNode.getLatitude(), startNode.getLongitude()), startNode.nodeNrAsString()));
 
@@ -199,34 +194,5 @@ class Graph {
         System.out.println("Distance between nodes: " + travelDistance /1000 + " km");
 
         window.setVisible(true);
-
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

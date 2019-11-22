@@ -13,7 +13,7 @@ public class Node implements Comparable<Node>{
     private boolean expanded = false;
     private double directDistance = 0;
 
-    private ArrayList<Edge> edges = new ArrayList<>();
+    private ArrayList<Edge> edges = new ArrayList<Edge>();
 
 
     public void setVariables(double longitude, double latitude, int nodeNr){
