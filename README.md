@@ -2,6 +2,8 @@
 
 Assignments for 'Algorithms and Datastructures'
 
+The missing assignments are paper assignments
+
 * Assignment 1 - [Stocks](/assignment_1/assignment_1.js)
 
 * Assignment 2 - [Recursion](/assignment_2/assignment_2.js)
@@ -20,4 +22,4 @@ Assignments for 'Algorithms and Datastructures'
 
 * Assignment 12 - [LZ77 Compression](/assignment_12)
 
-* Assignment 13 - [Dijkstra's and A*](/assignment_12)
+* Assignment 13 - [Dijkstra's and A*](/assignment_13)
