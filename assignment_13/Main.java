@@ -17,8 +17,8 @@ public class Main {
         Date startTime;
         Date stopTime;
 
-        int from = 5709083;
-        int to = 5108028;
+        int from = 3267443;
+        int to = 3147229;
 
         System.out.println("Loading file...");
         graph.fillGraph(br1, br2);
@@ -26,7 +26,7 @@ public class Main {
 
         System.out.println("Calculating shortest path...");
         startTime = new Date();
-        graph.a_Star(from, to);
+        graph.dijkstra(from, to);
         stopTime = new Date();
         System.out.println("Algorithm took " + (double) (stopTime.getTime()-startTime.getTime()) + "ms");
 

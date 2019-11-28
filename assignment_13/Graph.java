@@ -1,6 +1,4 @@
 import java.awt.*;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,14 +8,6 @@ import eu.jacquet80.minigeo.MapWindow;
 import eu.jacquet80.minigeo.POI;
 import eu.jacquet80.minigeo.Point;
 import eu.jacquet80.minigeo.Segment;
-import org.openstreetmap.gui.jmapviewer.JMapViewer;
-import org.openstreetmap.gui.jmapviewer.OsmTileLoader;
-import org.openstreetmap.gui.jmapviewer.interfaces.MapMarker;
-import org.openstreetmap.gui.jmapviewer.interfaces.MapPolygon;
-import org.openstreetmap.gui.jmapviewer.interfaces.TileLoader;
-import org.openstreetmap.gui.jmapviewer.interfaces.TileSource;
-import org.openstreetmap.gui.jmapviewer.tilesources.BingAerialTileSource;
-import org.openstreetmap.gui.jmapviewer.tilesources.OsmTileSource;
 
 
 import javax.swing.*;
@@ -36,7 +26,6 @@ class Graph extends JFrame {
         startNode.setCost(0);
         queue.add(startNode);
 
-
         while(!queue.isEmpty()) {
             current = queue.poll();
             current.setExpanded(true);
@@ -46,7 +35,6 @@ class Graph extends JFrame {
             // Iterate current node's edges
             for(Edge e : current.getEdge()) {
                 Node toNode = e.getNodeTo();
-
 
                 if(toNode.getCost() > current.getCost() + e.getDriveTime()) {
                     toNode.setCost(current.getCost() + e.getDriveTime());
@@ -78,11 +66,11 @@ class Graph extends JFrame {
 
         while(!queue.isEmpty()) {
             current = queue.poll();
-            current.setExpanded(true);
 
             if(current.equals(stopNode)) break;
 
             // Iterate current node's edges
+            current.setExpanded(true);
             for(Edge e : current.getEdge()) {
                 Node toNode = e.getNodeTo();
 
@@ -100,7 +88,7 @@ class Graph extends JFrame {
                     toNode.setPriority((int) toNode.getDirectDistance() / 130 * 3600 + toNode.getCost());
                 }
 
-                // Adds or removes form queue based on if they have been expanded or discovered
+                // Adds or removes from queue based on if they have been expanded or discovered
                 if(!toNode.isExpanded()) {
                     if(toNode.isDiscovered()) queue.remove(toNode);
                     toNode.setDiscovered(true);
@@ -182,11 +170,11 @@ class Graph extends JFrame {
             points.add(n);
         }
 
-        window.addPOI(new POI(new Point(startNode.getLatitude(), startNode.getLongitude()), startNode.nodeNrAsString()));
+        window.addPOI(new POI(new Point(stopNode.getLatitude(), stopNode.getLongitude()), stopNode.nodeNrAsString()));
 
         for(int i = 0; i < points.size() - 1; i++) window.addSegment(new Segment(points.get(i), points.get(i + 1), Color.RED));
 
-        window.addPOI(new POI(new Point(stopNode.getLatitude(), stopNode.getLongitude()), stopNode.nodeNrAsString()));
+        window.addPOI(new POI(new Point(startNode.getLatitude(), startNode.getLongitude()), startNode.nodeNrAsString()));
 
         System.out.println("\nPath Information:\n");
         System.out.println("Time: " + hours +":" + minutes+":"+seconds);

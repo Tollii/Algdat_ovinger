@@ -1,17 +1,23 @@
-# TDAT2005 Øvinger
+# TDAT2005 Assignments
 
-Øvinger for Algoritmer og datastrukturer
+Assignments for 'Algorithms and Datastructures'
 
-* Øving 1 - [Aksjer](/oving1/oving1.js)
+* Assignment 1 - [Stocks](/assignment_1/assignment_1.js)
 
-* Øving 2 - [Recursion](/oving2/oving2.js)
+* Assignment 2 - [Recursion](/assignment_2/assignment_2.js)
 
-* Øving 3 - [Quicksort with assisting algorithm](/oving3/oving3.js)
+* Assignment 3 - [Quicksort with assisting algorithm](/assignment_3/assignment_3.js)
 
-* Øving 4 - [Josephus' problem and error flagger](/oving4)
+* Assignment 4 - [Josephus' problem and error flagger](/assignment_4)
 
-* Øving 5 - [Hashtable](/oving5)
+* Assignment 5 - [Hashtable](/assignment_5)
 
-* Øving 7 - [Unweighted graphs](/oving7)
+* Assignment 7 - [Unweighted graphs](/assignment_7)
 
-* Øving 8 - [Edmonds–Karp algorithm](/oving8)
+* Assignment 8 - [Edmonds–Karp algorithm](/assignment_8)
+
+* Assignment 11 - [Automaton](/assignment_11/Automat.java)
+
+* Assignment 12 - [LZ77 Compression](/assignment_12)
+
+* Assignment 13 - [Dijkstra's and A*](/assignment_12)
